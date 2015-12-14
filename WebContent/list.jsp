@@ -11,12 +11,78 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.js"></script>
+<script>
+function openContent(idx){
+	$(".mw_layer").addClass("open");
+	$.ajax({
+		type: "post",
+		url: "content.do",
+		data: ({idx:idx}),
+		success: function(data){
+			$("#layer").html(data);		
+		}
+	});
+}
+$(function(){
+	var layerWindow = $(".mw_layer");
+	$(document).keydown(function(event){
+		if(event.keyCode != 27) return true;
+		if(layerWindow.hasClass("open")){
+			layerWindow.removeClass("open");
+		}
+		return false;
+	});
+	layerWindow.find(">.bg").mousedown(function(event){
+		layerWindow.removeClass("open");
+		return false;
+	});
+});
+</script>
 <title>Testing board</title>
 </head>
 <body>
 <style>
 tr, td{
 	border: 1px solid black;
+}
+.mw_layer{
+	display: none;
+	position: fixed;
+	_position: absolute;
+	top: 0;
+	left: 0;
+	z-index: 10000;
+	width: 100%;
+	heigth: 100%;
+}
+.mw_layer.open{
+	display: block;
+}
+.mw_layer.bg{
+	position: absolute;
+	top:0;
+	left:0;
+	width:100%;
+	height:100%;
+	background:#000;
+	opacity:.5;
+	filter:alpha(opacity=50)
+}
+#layer{
+	position:absolute;
+	top:40%;
+	left:40%;
+	width:400px;
+	height:400px;
+	margin:150px 0 0 -194px;
+	padding:28px 28px 0 28px;
+	border:2px solid #555;
+	background:#fff;
+	font-size:12px;
+	font-family:Tahoma, Geneva, sans-serif;
+	color:#767676;
+	line-height:normal;
+	white-space:normal
 }
 </style>
 <h1>Testing Board</h1>
@@ -35,7 +101,7 @@ tr, td{
 		<tbody>
 			<c:forEach items="${articleList}" var="article">
 				<tr>
-					<td>${article.idx}</td>
+					<td><a href="#layer" onclick="openContent('${article.idx}')">${article.idx}</a></td>
 					<td><a href="count.do?idx=${article.idx}">${article.title}</a></td>
 					<td>${article.writer}</td>
 					<td>${article.ip}</td>
@@ -69,6 +135,10 @@ tr, td{
 		<a href="#">next</a>
 	</c:if>
 	-->
+	<div class="mw_layer">
+		<div class="bg"></div>
+		<div id="layer"></div>
+	</div>
 	<script>
 	function loadNextPage(){
 		var page = $("#page").val();
