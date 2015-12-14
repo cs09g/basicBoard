@@ -4,9 +4,27 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.js"></script>
 <title>Insert title here</title>
 </head>
 <body>
-<script>location.href="${url}";</script>
+<script>
+$.ajax({
+	type: "post",
+	url: "${url}",
+	success: function(data){
+		$("#content").html(data);	
+	}	
+});
+function chkContent(){
+	if($(document).hasClass("mw_layer")===true){
+		closeContent();
+	}
+	else{
+		location.href="list.do";
+	}
+}
+</script>
+<div id="content"></div>
 </body>
 </html>

@@ -11,18 +11,32 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.js"></script>
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+
+<!-- Optional theme -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+
 <script>
 function openContent(idx){
 	$(".mw_layer").addClass("open");
 	$.ajax({
 		type: "post",
-		url: "content.do",
+		url: "count.do",
 		data: ({idx:idx}),
 		success: function(data){
 			$("#layer").html(data);		
 		}
 	});
 }
+
+function closeContent(){
+	$(".mw_layer").removeClass("open");
+}
+
 $(function(){
 	var layerWindow = $(".mw_layer");
 	$(document).keydown(function(event){
@@ -42,9 +56,6 @@ $(function(){
 </head>
 <body>
 <style>
-tr, td{
-	border: 1px solid black;
-}
 .mw_layer{
 	display: none;
 	position: fixed;
@@ -72,7 +83,7 @@ tr, td{
 	position:absolute;
 	top:40%;
 	left:40%;
-	width:400px;
+	width:auto;
 	height:400px;
 	margin:150px 0 0 -194px;
 	padding:28px 28px 0 28px;
@@ -86,8 +97,8 @@ tr, td{
 }
 </style>
 <h1>Testing Board</h1>
-	<a href="write.do">Write</a>
-	<table style="border:1px solid black">
+	<a class="btn btn-default" href="write.do" style="margin-bottom:10px">Write</a>
+	<table class="table table-striped">
 		<thead>
 			<tr>
 				<td>no</td>
@@ -98,7 +109,7 @@ tr, td{
 				<td>read</td>
 			</tr>
 		</thead>
-		<tbody>
+		<tbody id="tbody">
 			<c:forEach items="${articleList}" var="article">
 				<tr>
 					<td><a href="#layer" onclick="openContent('${article.idx}')">${article.idx}</a></td>
@@ -128,7 +139,7 @@ tr, td{
 	<c:if test="${fn:length(articleList)==10}">
 	-->
 		<input type="hidden" name="page" id="page" value="${page}">
-		<a href="#" onclick="loadNextPage()">next</a>
+		<a class="btn btn-default" href="#" onclick="loadNextPage()">next</a>
 	<!--
 	</c:if>
 	<c:if test="${fn:length(articleList)<10}">
@@ -149,7 +160,7 @@ tr, td{
 			url: "ajaxList.do",
 			data: ({page:page}),
 			success: function(data){
-				$("table").append(data);
+				$("#tbody").append(data);
 				$("#page").val(page);
 			}
 		});
