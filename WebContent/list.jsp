@@ -10,6 +10,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.js"></script>
 <title>Testing board</title>
 </head>
 <body>
@@ -44,6 +45,10 @@ tr, td{
 			</c:forEach>
 		</tbody>
 	</table>
+	<!--
+	<div id="append_article">
+	</div>
+	 
 	<c:if test="${page>0}">
 		<a href="list.do?page=${page-10}">prev</a>
 	</c:if>
@@ -52,12 +57,33 @@ tr, td{
 	</c:if>
 	
 	<fmt:parseNumber value="${page/10+1}" type="number" integerOnly="True" />page
-	
+	-->
+	<!--
 	<c:if test="${fn:length(articleList)==10}">
-		<a href="list.do?page=${page+10}">next</a>
+	-->
+		<input type="hidden" name="page" id="page" value="${page}">
+		<a href="#" onclick="loadNextPage()">next</a>
+	<!--
 	</c:if>
 	<c:if test="${fn:length(articleList)<10}">
 		<a href="#">next</a>
 	</c:if>
+	-->
+	<script>
+	function loadNextPage(){
+		var page = $("#page").val();
+		page = parseInt(page);
+		page += 10;
+		$.ajax({
+			type: "post",
+			url: "ajaxList.do",
+			data: ({page:page}),
+			success: function(data){
+				$("table").append(data);
+				$("#page").val(page);
+			}
+		});
+	}
+	</script>
 </body>
 </html>

@@ -45,12 +45,12 @@ tr, td{
 		</tr>
 		<tr>
 			<td class="keys" colspan="2"'>filename</td>
-			<td colspan="8"><a href="#" onclick="onDownload(${filename}})">${filename}</a></td>
+			<td colspan="8"><a href="#" onclick='onDownload("${idx}")'>${filename}</a></td>
 		</tr>
 	</table>
 	<script>
-	function onDownload(filename){
-		location.href="download.do?filename="+filename;
+	function onDownload(idx){
+		document.getElementById("ifrm_filedown").src ="download.do?idx="+idx;
 	}
 	</script>
 </body>
