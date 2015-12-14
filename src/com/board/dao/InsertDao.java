@@ -11,15 +11,15 @@ import com.board.beans.Board;
 public class InsertDao extends CommonDao {
 	public static InsertDao getInstance(){
 		InsertDao _instance = new InsertDao();
+		_instance.SetDB();
 		return _instance;
 	}
 	
 	public void insertArticle(Board article) throws SQLException{
-		GetDB().queryForList("insertArticle", article);
+		GetDB().insert("insertArticle", article);
 	}
 	
 	public int getCurrentIdx() throws SQLException{
-		System.out.println("in");
-		return (int)(GetDB().queryForObject("getCurrentIdx", null));
+		return (int)GetDB().queryForObject("getCurrentIdx", null);
 	}
 }

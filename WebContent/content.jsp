@@ -44,8 +44,8 @@ tr, td{
 			<td colspan="8" height="50">${content}</td>
 		</tr>
 		<tr>
-			<td class="keys" colspan="2"'><a href="#" onclick="onDownload(${filename}})">filename</a></td>
-			<td colspan="8">${filename}</td>
+			<td class="keys" colspan="2"'>filename</td>
+			<td colspan="8"><a href="#" onclick="onDownload(${filename}})">${filename}</a></td>
 		</tr>
 	</table>
 	<script>

@@ -14,4 +14,8 @@ public class ContentDao extends CommonDao{
 	public Board getContent(int idx) throws SQLException{
 		return (Board)GetDB().queryForObject("getContent", idx);
 	}
+	
+	public void updateReadCount(int idx) throws SQLException{
+		GetDB().update("setReadCount", idx);
+	}
 }

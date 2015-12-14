@@ -15,8 +15,8 @@
 	<select id="getContent" parameterClass="int" resultClass="board">
 		select * from board where idx = #idx#
 	</select>
-	<select id="getCurrentIdx" parameterClass="int">
-		select count(idx) from board
+	<select id="getCurrentIdx" resultClass="int">
+		select max(idx) from board
 	</select>
 	
 	
@@ -25,12 +25,14 @@
 	</delete>
 	
 	<insert id="insertArticle" parameterClass="board">
-		insert into board (idx, title, writer,  count, content, ip, filename) value (
-		#idx#, #title#, #writer#,  #count#, #content#, #ip#, #filename#)
+		insert into board 
+		(idx, title, writer,  count, content, date, ip, filename)
+		value 
+		(#idx#, #title#, #writer#,  #count#, #content#, #date#, #ip#, #filename#)
 	</insert>
 	
-	<update id="setReadCount" parameterClass="board">
-		update board set count= #count# where idx=#idx#
+	<update id="setReadCount" parameterClass="int">
+		update board set count=count+1 where idx=#idx#
 	</update>
 	
 </sqlMap>

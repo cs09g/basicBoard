@@ -19,7 +19,9 @@ public class ContentAction implements CommandAction {
 			request.setAttribute("idx",  content.getIdx());
 			request.setAttribute("writer",  content.getWriter());
 			request.setAttribute("date",  content.getDate());
-			request.setAttribute("count",  content.getCount());
+			request.setAttribute("ip",  content.getIp());
+			request.setAttribute("count",  content.getCount()+1);
+			ContentDao.getInstance().updateReadCount(idx);
 			request.setAttribute("title",  content.getTitle());
 			request.setAttribute("content",  content.getContent());
 			request.setAttribute("filename", content.getFilename());

@@ -1,6 +1,9 @@
 package com.board.action;
 
 import java.sql.*;
+import java.util.Date;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.regex.Pattern;
 
 import javax.servlet.http.HttpServletRequest;
@@ -28,10 +31,12 @@ public class InsertAction implements CommandAction{
 			e.printStackTrace();
 		}
 		String filename = multi.getFilesystemName("filename");
-		
-		String title = request.getParameter("title"),
-				writer = request.getParameter("writer"),
-				content = request.getParameter("content"),
+		DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+		Date date = new Date();
+		String title = multi.getParameter("title"),
+				writer = multi.getParameter("writer"),
+				content = multi.getParameter("content"),
+				cdate = dateFormat.format(date),
 				ip = request.getRemoteAddr();
 		int count = 0;
 
@@ -44,18 +49,20 @@ public class InsertAction implements CommandAction{
 		 
 		if(content == "" ||content == null) System.out.println("content가 null입니다.");
 		
-		if(ip != request.getParameter("ip")){
+		if(ip != multi.getParameter("ip")){
 			count++;
 		}
-		
+		System.out.println(cdate);
 		try{
 			Board article = new Board();
-			article.setIdx(InsertDao.getInstance().getCurrentIdx());
+			article.setIdx(InsertDao.getInstance().getCurrentIdx()+1);
 			article.setCount(count);
 			article.setIp(ip);
 			article.setWriter(writer);
 			article.setContent(content);
 			article.setTitle(title);
+			article.setDate(cdate);
+			article.setFilename(filename);
 			InsertDao.getInstance().insertArticle(article);
 		}catch(Exception e){
 			System.out.println("connection failed");
