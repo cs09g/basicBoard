@@ -101,12 +101,12 @@ $(function(){
 	<table class="table table-striped">
 		<thead>
 			<tr>
-				<td>no</td>
-				<td>title</td>
-				<td>writer</td>
-				<td>ip</td>
-				<td>date</td>
-				<td>read</td>
+				<th>no</th>
+				<th>title</th>
+				<th>writer</th>
+				<th class="visible-sm">ip</th>
+				<th>date</th>
+				<th>read</th>
 			</tr>
 		</thead>
 		<tbody id="tbody">
@@ -115,7 +115,7 @@ $(function(){
 					<td><a href="#layer" onclick="openContent('${article.idx}')">${article.idx}</a></td>
 					<td><a href="count.do?idx=${article.idx}">${article.title}</a></td>
 					<td>${article.writer}</td>
-					<td>${article.ip}</td>
+					<td class="visible-sm">${article.ip}</td>
 					<td>${article.date}</td>
 					<td>${article.count}</td>
 				</tr>

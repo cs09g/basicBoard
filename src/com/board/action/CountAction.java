@@ -20,7 +20,7 @@ public class CountAction implements CommandAction{
 		if(!ip.equals(article.getIp())){
 			int cnt = article.getCount();
 			article.setCount(cnt++);
-			BoardDao.getInstance().setReadCount(article);
+			BoardDao.getInstance().setReadCount(idx);
 		}
 		request.setAttribute("url", "content.do?idx="+idx);
 		return "redirect.jsp";

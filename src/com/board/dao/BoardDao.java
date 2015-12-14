@@ -21,8 +21,8 @@ public class BoardDao extends CommonDao{
 		return (Board)GetDB().queryForObject("getArticle", idx);
 	}
 	
-	public void setReadCount(Board article) throws SQLException{
-		GetDB().update("setReadCount",  article);
+	public void setReadCount(int idx) throws SQLException{
+		GetDB().update("setReadCount",  idx);
 	}
 	/*
 	public int getNumberOfPage(int numOfArticlesInOnePage) throws SQLException{
